@@ -1,0 +1,283 @@
+
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAYA PA BA? O DROP NA?</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+    font-family: 'Arial Black', Arial, sans-serif;
+    color: #fff;
+    overflow: hidden;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-transform: uppercase;
+    background: linear-gradient(90deg, #ff0080, #ffcc00, #00ff88);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: glow 1.5s ease-in-out infinite alternate;
+    margin-bottom: 10px;
+}
+
+@keyframes glow {
+    from { filter: drop-shadow(0 0 5px #ff0080); }
+    to { filter: drop-shadow(0 0 25px #00ff88); }
+}
+
+.sub {
+    font-size: 1em;
+    color: #bbb;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.buttons {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+button {
+    padding: 20px 35px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: transform 0.15s, box-shadow 0.15s;
+    position: relative;
+    touch-action: manipulation;
+}
+
+#kayaPa {
+    background: linear-gradient(90deg, #00c853, #00e676);
+    color: #003300;
+    box-shadow: 0 0 20px #00e676;
+}
+
+#dropNa {
+    background: linear-gradient(90deg, #d50000, #ff1744);
+    color: #fff;
+    box-shadow: 0 0 20px #ff1744;
+}
+
+button:hover {
+    transform: scale(1.08);
+}
+
+.result {
+    margin-top: 50px;
+    font-size: 1.5em;
+    min-height: 60px;
+    text-shadow: 0 0 15px currentColor;
+}
+
+.error-screen {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    padding: 20px;
+}
+
+.error-screen h2 {
+    font-size: 2em;
+    color: #ff1744;
+    animation: shake 0.3s infinite;
+}
+
+.error-screen p {
+    color: #aaa;
+    margin-top: 20px;
+    font-size: 1.1em;
+}
+
+@keyframes shake {
+    0% { transform: translate(2px, 0); }
+    50% { transform: translate(-2px, 0); }
+    100% { transform: translate(2px, 0); }
+}
+
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -20px;
+    z-index: 998;
+    pointer-events: none;
+    animation: fall linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+    }
+}
+
+@media (max-width: 500px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    .sub {
+        font-size: 0.8em;
+    }
+
+    .buttons {
+        gap: 20px;
+    }
+
+    button {
+        padding: 16px 25px;
+        font-size: 1em;
+    }
+
+    .result {
+        font-size: 1.2em;
+    }
+
+    .error-screen h2 {
+        font-size: 1.5em;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<h1>🔥 Kaya Pa Ba? O Drop Na? 🔥</h1>
+<p class="sub">PILIIN MO NG MATINO PREEE</p>
+
+<div class="buttons">
+    <button id="kayaPa" onclick="kayaPa()">
+        💪 KAYA PA
+    </button>
+
+    <button id="dropNa" onclick="errorNa()">
+        💀 DROP NA
+    </button>
+</div>
+
+<div class="result" id="result"></div>
+
+<div class="error-screen" id="errorScreen">
+    <h2>⚠️ ERROR 404: MOTIVATION NOT FOUND ⚠️</h2>
+    <p>HINDI PEDE ANG DROP NA DREEEE. TRY AGAIN.</p>
+
+    <button id="balikButton"
+        style="margin-top:30px; background:linear-gradient(90deg,#00c853,#00e676); color:#003300;"
+        onclick="balik()">
+        🛠️ BALIK SA LABAN
+    </button>
+</div>
+
+<script>
+// KAYA PA BUTTON
+function kayaPa() {
+    const hype = [
+        "🔥 E NICE ONE PREEEE! AYEAAAAH! 🔥",
+        "💪 SOLID! LABAS LANG NG LABAS! 💪",
+        "🚀 AYOS YAN PREE! KAYANG KAYA! 🚀",
+        "⚡ GRABE KA DREE! FULL SEND! ⚡"
+    ];
+
+    document.getElementById('result').textContent =
+        hype[Math.floor(Math.random() * hype.length)];
+
+    confettiRain();
+}
+
+// GUMAGALAW NA DROP NA BUTTON
+const dropButton = document.getElementById('dropNa');
+
+function takas(btn) {
+    const maxX = window.innerWidth - btn.offsetWidth;
+    const maxY = window.innerHeight - btn.offsetHeight;
+
+    const x = Math.random() * Math.max(0, maxX);
+    const y = Math.random() * Math.max(0, maxY);
+
+    btn.style.position = 'fixed';
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
+    btn.style.zIndex = '10';
+    btn.style.transition = 'all 0.3s ease';
+}
+
+// Laptop: gagalaw kapag nilapitan ng mouse
+dropButton.addEventListener('mouseenter', function() {
+    takas(this);
+});
+
+// Cellphone: gagalaw kapag hinawakan
+dropButton.addEventListener('touchstart', function() {
+    takas(this);
+}, { passive: true });
+
+// ERROR SCREEN
+function errorNa() {
+    document.getElementById('errorScreen').style.display = 'flex';
+}
+
+// BALIK SA LABAN
+function balik() {
+    document.getElementById('errorScreen').style.display = 'none';
+    document.getElementById('result').textContent =
+        "💪 GANAN PREE! WALANG DROP! 💪";
+}
+
+// CONFETTI
+function confettiRain() {
+    const colors = [
+        '#ff0080',
+        '#ffcc00',
+        '#00ff88',
+        '#00bfff',
+        '#ff6600'
+    ];
+
+    for (let i = 0; i < 80; i++) {
+        const c = document.createElement('div');
+
+        c.className = 'confetti';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+        c.style.animationDuration =
+            (2 + Math.random() * 2) + 's';
+
+        document.body.appendChild(c);
+
+        setTimeout(() => c.remove(), 4000);
+    }
+}
+</script>
+
+</body>
+</html>
